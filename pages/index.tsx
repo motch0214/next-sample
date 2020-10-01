@@ -1,7 +1,7 @@
-import React from 'react'
-import Head from 'next/head'
+import Head from "next/head"
+import React from "react"
 
-import styles from '../styles/Home.module.css'
+import styles from "../styles/Home.module.css"
 
 const Index: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const Index: React.FC = () => {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
@@ -58,7 +58,7 @@ const Index: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
