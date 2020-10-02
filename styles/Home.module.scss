@@ -4,17 +4,17 @@
   flex-basis: 45%;
   border-width: 1px;
   transition: color 0.15s ease, border-color 0.15s ease;
-}
 
-.card:hover,
-.card:focus {
-  @apply text-blue-600 border-blue-600;
-}
+  &:hover,
+  &:focus {
+    @apply text-blue-600 border-blue-600;
+  }
 
-.card h3 {
-  @apply mb-4 text-2xl;
-}
+  & h3 {
+    @apply mb-4 text-2xl;
+  }
 
-.card p {
-  @apply m-0 text-xl leading-normal;
+  & p {
+    @apply m-0 text-xl leading-normal;
+  }
 }

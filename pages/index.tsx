@@ -1,7 +1,7 @@
 import Head from "next/head"
 import React from "react"
 
-import styles from "../styles/Home.module.css"
+import styles from "../styles/Home.module.scss"
 
 const Index: React.FC = () => {
   return (
