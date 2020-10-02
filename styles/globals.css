@@ -1,3 +1,7 @@
+@tailwind base;
+
+/* Custom base styles */
+
 html,
 body {
   padding: 0;
@@ -14,3 +18,19 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Custom component styles */
+
+.btn-blue {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+}
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Custom utilities */
