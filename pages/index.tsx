@@ -15,7 +15,7 @@ const Index: React.FC = () => {
         <h1 className="m-0 text-6xl leading-tight text-center">
           Welcome to{" "}
           <a
-            className="text-blue-600 no-underline outline-none hover:underline focus:underline"
+            className="no-underline outline-none text-primary hover:underline focus:underline"
             href="https://nextjs.org"
           >
             Next.js!
