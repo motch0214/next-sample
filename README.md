@@ -4,7 +4,13 @@ This is a [Next.js](https://nextjs.org/) sample project based on [`create-next-a
 
 ## Getting Started
 
-First, run the development server:
+Prepare environment file `.env.local`:
+
+```properties
+NEXT_PUBLIC_FIREBASE_CONFIG='{ ... }'
+```
+
+Then, run the development server:
 
 ```bash
 npm start
