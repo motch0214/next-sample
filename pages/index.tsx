@@ -1,6 +1,8 @@
 import Head from "next/head"
 import React from "react"
 
+import Button from "@material-ui/core/Button"
+
 import styles from "../styles/Home.module.scss"
 
 const Index: React.FC = () => {
@@ -27,6 +29,13 @@ const Index: React.FC = () => {
           <code className="p-3 font-mono text-lg bg-gray-100 rounded">
             pages/index.js
           </code>
+          <Button
+            className="ml-2 font-bold"
+            color="primary"
+            variant="contained"
+          >
+            Open
+          </Button>
         </p>
 
         <div className="flex flex-col flex-wrap items-center justify-center w-full max-w-3xl mt-12 md:flex-row">

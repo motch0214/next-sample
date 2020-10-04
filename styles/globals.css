@@ -1,6 +1,11 @@
 @tailwind base;
 
 /* Custom base styles */
+@layer base {
+  button:focus {
+    outline: 0;
+  }
+}
 
 @tailwind components;
 
