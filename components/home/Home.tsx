@@ -1,17 +1,40 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import Button from "@material-ui/core/Button"
+
+import FirebaseContext from "../FirebaseContext"
 
 import styles from "./Home.module.scss"
 
 const Home: React.FC = () => {
+  const { getFirebase, user, initialized } = useContext(FirebaseContext)
+
+  const logout = async () => {
+    const firebase = await getFirebase()
+    await firebase.auth().signOut()
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-2">
+      <header className="fixed top-0 w-full h-12 bg-gray-700">
+        <div className="flex items-center justify-end w-full h-full max-w-4xl px-4 mx-auto">
+          {!initialized ? null : user ? (
+            <Button className="text-white" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
+            <Button className="text-white" href="/login">
+              Login
+            </Button>
+          )}
+        </div>
+      </header>
+
       <main className="flex flex-col items-center justify-center flex-1 py-20">
         <h1 className="m-0 text-6xl leading-tight text-center">
           Welcome to{" "}
           <a
-            className="no-underline outline-none text-primary hover:underline focus:underline"
+            className="outline-none text-primary hover:underline focus:underline"
             href="https://nextjs.org"
           >
             Next.js!
@@ -23,13 +46,6 @@ const Home: React.FC = () => {
           <code className="p-3 font-mono text-lg bg-gray-100 rounded">
             pages/index.js
           </code>
-          <Button
-            className="ml-2 font-bold"
-            color="primary"
-            variant="contained"
-          >
-            Open
-          </Button>
         </p>
 
         <div className="flex flex-col flex-wrap items-center justify-center w-full max-w-3xl mt-12 md:flex-row">
