@@ -1,3 +1,4 @@
+import Link from "next/link"
 import React, { useContext, useState } from "react"
 
 import Button from "@material-ui/core/Button"
@@ -75,12 +76,14 @@ const SignupContainer: React.FC = () => {
             </Button>
 
             <div className="flex flex-col items-center w-full pt-4 mt-10 border-t border-gray-300">
-              <a
-                className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline"
-                href="/login"
-              >
-                Login with existing account
-              </a>
+              <Link href="/login">
+                <a
+                  className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline"
+                  href="/login"
+                >
+                  Login with existing account
+                </a>
+              </Link>
             </div>
           </>
         )}

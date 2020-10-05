@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import React, { useContext, useEffect, useState } from "react"
 
 import Button from "@material-ui/core/Button"
@@ -6,6 +7,7 @@ import TextField from "@material-ui/core/TextField"
 import FirebaseContext from "../FirebaseContext"
 
 const SignupContinueContainer: React.FC = () => {
+  const router = useRouter()
   const { firebase, getFirebase } = useContext(FirebaseContext)
 
   const [storedEmail, setStoredEmail] = useState("")
@@ -24,7 +26,7 @@ const SignupContinueContainer: React.FC = () => {
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
       setStoredEmail(window.localStorage.getItem("emailForSignup"))
     } else {
-      window.location.href = "/signup"
+      router.replace("/signup")
     }
   }, [firebase])
 
@@ -58,7 +60,7 @@ const SignupContinueContainer: React.FC = () => {
           user.updateProfile({ displayName: name })
         })
         .then(() => {
-          window.location.href = "/"
+          router.push("/")
         })
         .catch((error) => {
           console.log(error)

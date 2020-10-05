@@ -1,3 +1,4 @@
+import Link from "next/link"
 import React, { useContext } from "react"
 
 import Button from "@material-ui/core/Button"
@@ -23,9 +24,11 @@ const Home: React.FC = () => {
               Logout
             </Button>
           ) : (
-            <Button className="text-white" href="/login">
-              Login
-            </Button>
+            <Link href="/login">
+              <Button className="text-white" href="/login">
+                Login
+              </Button>
+            </Link>
           )}
         </div>
       </header>

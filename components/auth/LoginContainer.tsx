@@ -1,3 +1,4 @@
+import Link from "next/link"
 import React, { useContext, useState } from "react"
 
 import Button from "@material-ui/core/Button"
@@ -68,12 +69,14 @@ const LoginContainer: React.FC = () => {
           <a className="outline-none text-primary hover:text-opacity-75 focus:underline">
             Forget password?
           </a>
-          <a
-            className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline"
-            href="/signup"
-          >
-            Create a new account
-          </a>
+          <Link href="/signup">
+            <a
+              className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline"
+              href="/signup"
+            >
+              Create a new account
+            </a>
+          </Link>
         </div>
       </div>
     </div>
