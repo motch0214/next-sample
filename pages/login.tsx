@@ -1,7 +1,7 @@
 import Head from "next/head"
 import React from "react"
 
-import LoginContainer from "../components/auth/LoginContainer"
+import LoginContainer from "components/auth/LoginContainer"
 
 const Login: React.FC = () => {
   return (

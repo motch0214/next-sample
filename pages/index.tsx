@@ -1,7 +1,7 @@
 import Head from "next/head"
 import React from "react"
 
-import Home from "../components/home/Home"
+import Home from "components/home/Home"
 
 const Index: React.FC = () => {
   return (

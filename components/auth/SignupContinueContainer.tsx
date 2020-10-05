@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
-import FirebaseContext from "../FirebaseContext"
+import FirebaseContext from "components/FirebaseContext"
 
 const SignupContinueContainer: React.FC = () => {
   const router = useRouter()

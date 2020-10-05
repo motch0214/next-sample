@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
-import FirebaseContext from "../FirebaseContext"
+import FirebaseContext from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
 

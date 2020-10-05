@@ -23,7 +23,9 @@
       {
         "pathGroups": [
           { "pattern": "react", "group": "builtin" },
-          { "pattern": "next/*", "group": "builtin" }
+          { "pattern": "next", "group": "builtin" },
+          { "pattern": "next/*", "group": "builtin" },
+          { "pattern": "components/*", "group": "parent", "position": "before" }
         ],
         "pathGroupsExcludedImportTypes": ["builtin"],
         "alphabetize": { "order": "asc" },

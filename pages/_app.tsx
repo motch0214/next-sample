@@ -3,9 +3,11 @@ import React, { useEffect } from "react"
 
 import { ThemeProvider, StylesProvider } from "@material-ui/core/styles"
 
-import "../styles/globals.css"
-import { FirebaseContextProvider } from "../components/FirebaseContext"
+import { FirebaseContextProvider } from "components/FirebaseContext"
+
 import theme from "../styles/theme"
+
+import "../styles/globals.css"
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   useEffect(() => {

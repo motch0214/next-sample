@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 import MuiButton from "@material-ui/core/Button"
 import clsx from "clsx"
 
-import FirebaseContext from "../FirebaseContext"
+import FirebaseContext from "components/FirebaseContext"
 
 import styles from "./GoogleLoginButton.module.scss"
 

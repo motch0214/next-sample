@@ -1,7 +1,7 @@
 import Head from "next/head"
 import React from "react"
 
-import SignupContainer from "../components/auth/SignupContainer"
+import SignupContainer from "components/auth/SignupContainer"
 
 const Signup: React.FC = () => {
   return (

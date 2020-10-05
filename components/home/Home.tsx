@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 
 import Button from "@material-ui/core/Button"
 
-import FirebaseContext from "../FirebaseContext"
+import FirebaseContext from "components/FirebaseContext"
 
 import styles from "./Home.module.scss"
 
