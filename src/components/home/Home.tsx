@@ -19,6 +19,11 @@ const Home: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen px-2">
       <header className="fixed top-0 w-full h-12 bg-gray-700">
         <div className="flex items-center justify-end w-full h-full max-w-4xl px-4 mx-auto">
+          <Link href="/gallary">
+            <Button className="text-white" href="/gallary">
+              Gallary
+            </Button>
+          </Link>
           {!initialized ? null : user ? (
             <Button className="text-white" onClick={logout}>
               Logout
