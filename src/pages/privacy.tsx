@@ -2,6 +2,7 @@ import { GetStaticProps, InferGetStaticPropsType as Infer } from "next"
 import Head from "next/head"
 import React from "react"
 
+import Image from "components/atom/Image"
 import Document from "components/documents/Document"
 import InternalLink from "components/documents/InternalLink"
 import hydrate from "next-mdx-remote/hydrate"
@@ -24,6 +25,14 @@ const Privacy: React.FC<Infer<typeof getStaticProps>> = ({ source }) => {
 
 const components = {
   Link: InternalLink,
+  MadotsukiImage: () => (
+    <Image
+      className="w-full h-auto"
+      image={require("images/027.jpg?sizes[]=600,sizes[]=1024")}
+      webp={require("images/027.jpg?sizes[]=600,sizes[]=1024&format=webp")}
+      alt="MADOTSUKI"
+    />
+  ),
 }
 
 export const getStaticProps: GetStaticProps = async () => {
