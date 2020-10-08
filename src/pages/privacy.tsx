@@ -2,11 +2,12 @@ import { GetStaticProps, InferGetStaticPropsType as Infer } from "next"
 import Head from "next/head"
 import React from "react"
 
+import hydrate from "next-mdx-remote/hydrate"
+import render from "next-mdx-remote/render-to-string"
+
 import Image from "components/atom/Image"
 import Document from "components/documents/Document"
 import InternalLink from "components/documents/InternalLink"
-import hydrate from "next-mdx-remote/hydrate"
-import render from "next-mdx-remote/render-to-string"
 import { readDocument } from "utils/documents"
 
 const Privacy: React.FC<Infer<typeof getStaticProps>> = ({ source }) => {

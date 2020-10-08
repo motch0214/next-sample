@@ -25,8 +25,10 @@
           { "pattern": "react", "group": "builtin" },
           { "pattern": "next", "group": "builtin" },
           { "pattern": "next/*", "group": "builtin" },
-          { "pattern": "components/*", "group": "parent", "position": "before" }
+          { "pattern": "components/**/*", "group": "internal" },
+          { "pattern": "utils/**/*", "group": "internal" }
         ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling"],
         "pathGroupsExcludedImportTypes": ["builtin"],
         "alphabetize": { "order": "asc" },
         "newlines-between": "always"
