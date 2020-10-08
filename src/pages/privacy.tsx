@@ -3,6 +3,7 @@ import Head from "next/head"
 import React from "react"
 
 import Document from "components/documents/Document"
+import InternalLink from "components/documents/InternalLink"
 import hydrate from "next-mdx-remote/hydrate"
 import render from "next-mdx-remote/render-to-string"
 import { readDocument } from "utils/documents"
@@ -21,10 +22,12 @@ const Privacy: React.FC<Infer<typeof getStaticProps>> = ({ source }) => {
   )
 }
 
-const components = {}
+const components = {
+  Link: InternalLink,
+}
 
 export const getStaticProps: GetStaticProps = async () => {
-  const source = readDocument("privacy.md")
+  const source = readDocument("privacy.mdx")
   const mdxSource = await render(source, { components })
 
   return {

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next-remote-watch ./src/documents",
     "lint": "npm run prettier && npm run tsc && npm run eslint -- --fix && npm run stylelint -- --fix",
-    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,css,scss,md}\"",
+    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,css,scss,md,mdx}\"",
     "tsc": "tsc --noEmit",
     "eslint": "eslint . --ext ts,tsx,js,jsx",
     "stylelint": "stylelint **/*.css **/*.scss",
