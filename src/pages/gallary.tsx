@@ -1,15 +1,12 @@
-import Head from "next/head"
 import React from "react"
 
+import Seo from "components/Seo"
 import GallaryContainer from "components/gallary/GallaryContainer"
 
 const Gallary: React.FC = () => {
   return (
     <>
-      <Head>
-        <title>Gallary | Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo title="Gallary" />
       <GallaryContainer />
     </>
   )

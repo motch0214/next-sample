@@ -1,15 +1,12 @@
-import Head from "next/head"
 import React from "react"
 
+import Seo from "components/Seo"
 import Home from "components/home/Home"
 
 const Index: React.FC = () => {
   return (
     <>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo />
       <Home />
     </>
   )
