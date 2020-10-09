@@ -86,7 +86,11 @@ export class Response {
     this.error = error
   }
 
-  async json<T = unknown>(): Promise<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async json<T = any>(): Promise<T> {
+    if (this.error) {
+      throw this.error
+    }
     return this.response.json()
   }
 }

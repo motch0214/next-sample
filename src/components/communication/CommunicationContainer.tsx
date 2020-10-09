@@ -2,8 +2,15 @@ import React, { useState } from "react"
 
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
+import useSWR from "swr"
 
-import { useApi } from "components/ApiContext"
+import { Api, useApi } from "components/ApiContext"
+
+interface Article {
+  title: string
+}
+
+const fetcher = (api: Api, path: string) => api.get(path).then((r) => r.json())
 
 const CommunicationContainer: React.FC = () => {
   const api = useApi()
@@ -11,12 +18,15 @@ const CommunicationContainer: React.FC = () => {
   const [id, setId] = useState("")
   const [display, setDisplay] = useState("")
 
+  const { data: article, error } = useSWR<Article>(
+    id ? [api, `articles/${id}`] : null,
+    fetcher
+  )
+
   const call = async () => {
     setDisplay("Loading ...")
 
-    const response = await api.get("article", {
-      searchParams: { id: Number(id) },
-    })
+    const response = await api.get(`articles/${id}`)
 
     if (response.error) {
       if (response.error.type === "ArticleNotFoundException") {
@@ -50,6 +60,13 @@ const CommunicationContainer: React.FC = () => {
       >
         Call
       </Button>
+      <div className="h-8">
+        {article
+          ? `Title = ${article.title}`
+          : error
+          ? `Error = ${error.type}`
+          : ""}
+      </div>
       {display ? (
         <TextField
           className="w-full max-w-xl"
