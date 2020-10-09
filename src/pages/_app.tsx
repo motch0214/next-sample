@@ -3,6 +3,7 @@ import React, { useEffect } from "react"
 
 import { ThemeProvider, StylesProvider } from "@material-ui/core/styles"
 
+import { ApiContextProvider } from "components/ApiContext"
 import { FirebaseContextProvider } from "components/FirebaseContext"
 
 import theme from "../styles/theme"
@@ -22,7 +23,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <FirebaseContextProvider>
-          <Component {...pageProps} />
+          <ApiContextProvider>
+            <Component {...pageProps} />
+          </ApiContextProvider>
         </FirebaseContextProvider>
       </ThemeProvider>
     </StylesProvider>

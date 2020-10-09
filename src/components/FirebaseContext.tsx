@@ -4,9 +4,11 @@ import firebase from "firebase/app"
 
 type User = { id: string; name: string | null }
 
+export type Firebase = firebase.app.App
+
 const FirebaseContext = createContext<{
-  firebase: firebase.app.App | null
-  getFirebase: () => Promise<firebase.app.App | null>
+  firebase: Firebase | null
+  getFirebase: () => Promise<Firebase | null>
   user: User | null
   initialized: boolean
 }>({
@@ -18,7 +20,7 @@ const FirebaseContext = createContext<{
 
 const initialize = async () => {
   if (typeof window === "undefined") {
-    return
+    return null
   }
 
   if (!process.env.NEXT_PUBLIC_FIREBASE_CONFIG) {
@@ -39,7 +41,7 @@ const initialize = async () => {
 const promise = initialize()
 
 const FirebaseContextProvider: React.FC = ({ children }) => {
-  const [firebase, setFirebase] = useState<firebase.app.App | null>(null)
+  const [firebase, setFirebase] = useState<Firebase | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [initialized, setInitialized] = useState(false)
 

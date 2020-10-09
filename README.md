@@ -7,6 +7,8 @@ This is a [Next.js](https://nextjs.org/) sample project based on [`create-next-a
 Prepare environment file `.env.local`:
 
 ```properties
+NEXT_PUBLIC_API_SERVER_URL=https://...
+
 NEXT_PUBLIC_FIREBASE_CONFIG='{ ... }'
 ```
 
