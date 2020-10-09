@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import React, { useContext, useState } from "react"
 
 import Button from "@material-ui/core/Button"
@@ -9,6 +10,7 @@ import FirebaseContext from "components/FirebaseContext"
 import GoogleLoginButton from "./GoogleLoginButton"
 
 const LoginContainer: React.FC = () => {
+  const router = useRouter()
   const { getFirebase } = useContext(FirebaseContext)
 
   const [email, setEmail] = useState("")
@@ -25,7 +27,7 @@ const LoginContainer: React.FC = () => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-          window.location.href = "/"
+          router.push("/")
         })
         .catch((error) => {
           // TODO
@@ -51,6 +53,7 @@ const LoginContainer: React.FC = () => {
         />
         <TextField
           className="w-full mt-2"
+          type="password"
           label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -70,10 +73,7 @@ const LoginContainer: React.FC = () => {
             Forget password?
           </a>
           <Link href="/signup">
-            <a
-              className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline"
-              href="/signup"
-            >
+            <a className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline">
               Create a new account
             </a>
           </Link>

@@ -77,10 +77,7 @@ const SignupContainer: React.FC = () => {
 
             <div className="flex flex-col items-center w-full pt-4 mt-10 border-t border-gray-300">
               <Link href="/login">
-                <a
-                  className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline"
-                  href="/login"
-                >
+                <a className="mt-2 outline-none text-primary hover:text-opacity-75 focus:underline">
                   Login with existing account
                 </a>
               </Link>

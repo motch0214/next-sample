@@ -2,7 +2,7 @@
 
 /* Custom base styles */
 @layer base {
-  button:focus {
+  .MuiButton-root:focus {
     outline: 0;
   }
 }

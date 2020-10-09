@@ -1,8 +1,6 @@
 import Link from "next/link"
 import React, { useContext } from "react"
 
-import Button from "@material-ui/core/Button"
-
 import FirebaseContext from "components/FirebaseContext"
 
 import styles from "./Home.module.scss"
@@ -19,32 +17,26 @@ const Home: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen px-2">
       <header className="fixed top-0 w-full h-12 bg-gray-700">
         <div className="flex items-center justify-end w-full h-full max-w-4xl px-4 mx-auto">
-          <Link href="/communication">
-            <Button className="text-white" href="/communication">
-              Communication
-            </Button>
-          </Link>
-          <Link href="/privacy">
-            <Button className="text-white" href="/privacy">
-              Privacy Policy
-            </Button>
-          </Link>
-          <Link href="/gallary">
-            <Button className="text-white" href="/gallary">
-              Gallary
-            </Button>
-          </Link>
-          {!initialized ? null : user ? (
-            <Button className="text-white" onClick={logout}>
-              Logout
-            </Button>
-          ) : (
-            <Link href="/login">
-              <Button className="text-white" href="/login">
-                Login
-              </Button>
+          <div className="grid grid-flow-col gap-x-4">
+            <Link href="/communication">
+              <a className={styles.button}>Communication</a>
             </Link>
-          )}
+            <Link href="/privacy">
+              <a className={styles.button}>Privacy Policy</a>
+            </Link>
+            <Link href="/gallary">
+              <a className={styles.button}>Gallary</a>
+            </Link>
+            {!initialized ? null : user ? (
+              <button className={styles.button} onClick={logout}>
+                Logout
+              </button>
+            ) : (
+              <Link href="/login">
+                <a className={styles.button}>Login</a>
+              </Link>
+            )}
+          </div>
         </div>
       </header>
 
