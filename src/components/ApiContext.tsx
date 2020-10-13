@@ -24,9 +24,9 @@ export class Api {
   }
 
   /**
-	@example
-	```
-  const response = async api.post("path/to/api", { json: { hoge: true } })
+  @example
+  ```
+  const response = await api.post("path/to/api", { json: { hoge: true } })
   if (response.error) {
     if (response.error.type === "ExpectedError") {
       // Handle the error
@@ -35,9 +35,10 @@ export class Api {
     }
   } else {
     const data = await response.json()
+    // Use the response data
   }
-	```
-	*/
+  ```
+  */
   async post(path: string, options?: Options): Promise<Response> {
     return this.call(path, { ...options, method: "post" })
   }
