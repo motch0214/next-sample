@@ -69,6 +69,23 @@ const FirebaseContextProvider: React.FC = ({ children }) => {
   )
 }
 
+/**
+@example
+```
+const { firebase, getFirebase } = useFirebase()
+
+useEffect(() => {
+  if (firebase) {
+    // Use the firebase
+  }
+}, [firebase])
+
+const callback = async () => {
+  const firebase = await getFirebase()
+  // Use the firebase
+}
+```
+*/
 const useFirebase = (): {
   firebase: Firebase | null
   getFirebase: () => Promise<Firebase>

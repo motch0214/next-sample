@@ -19,15 +19,14 @@ const SignupContinueContainer: React.FC = () => {
   const [processing, setProcessing] = useState(false)
 
   useEffect(() => {
-    if (!firebase) {
-      return
+    if (firebase) {
+      if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+        setStoredEmail(window.localStorage.getItem("emailForSignup"))
+      } else {
+        router.replace("/signup")
+      }
     }
-
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      setStoredEmail(window.localStorage.getItem("emailForSignup"))
-    } else {
-      router.replace("/signup")
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firebase])
 
   const signup = async () => {
