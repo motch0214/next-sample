@@ -2,15 +2,13 @@ import React, { useState } from "react"
 
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
-import useSWR from "swr"
 
-import { Api, useApi } from "components/ApiContext"
+import { useApi } from "components/ApiContext"
+import useQuery from "utils/useQuery"
 
 interface Article {
   title: string
 }
-
-const fetcher = (api: Api, path: string) => api.get(path).then((r) => r.json())
 
 const CommunicationContainer: React.FC = () => {
   const api = useApi()
@@ -18,9 +16,8 @@ const CommunicationContainer: React.FC = () => {
   const [id, setId] = useState("")
   const [display, setDisplay] = useState("")
 
-  const { data: article, error } = useSWR<Article>(
-    id ? [api, `articles/${id}`] : null,
-    fetcher
+  const { data: article, error } = useQuery<Article>(
+    id ? `articles/${id}` : null
   )
 
   const call = async () => {
