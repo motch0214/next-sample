@@ -12,11 +12,11 @@ type Ky = typeof ky
 
 export class Api {
   private ky: Ky
-  private onError: OnError
+  private showError: ShowError
 
-  constructor(ky: Ky, onError: OnError) {
+  constructor(ky: Ky, showError: ShowError) {
     this.ky = ky
-    this.onError = onError
+    this.showError = showError
   }
 
   async get(path: string, options?: Options): Promise<Response> {
@@ -55,34 +55,34 @@ export class Api {
       .then((response) => new Response(response))
       .catch(async (error) => {
         if (!error.response) {
-          return new Response(error.response, this.handler("NetworkError"))
+          return new Response(error.response, this.handling("NetworkError"))
         }
 
-        const handler = await error.response
+        const handling = await error.response
           .json() // 例外の内容を取得
-          .then((body) => this.handler(body.type))
+          .then((body) => this.handling(body.type))
           .catch(() => {
             const status = error.response.status
             if (status >= 500) {
-              return this.handler("ServerError")
+              return this.handling("ServerError")
             } else {
-              return this.handler("ClientError")
+              return this.handling("ClientError")
             }
           })
-        return new Response(error.response, handler)
+        return new Response(error.response, handling)
       })
   }
 
-  private handler(type: string) {
-    return new ErrorHandler(type, this.onError)
+  private handling(type: string) {
+    return new ErrorHandling(type, this.showError)
   }
 }
 
 export class Response {
   private response: globalThis.Response
-  readonly error?: ErrorHandler
+  readonly error?: ErrorHandling
 
-  constructor(response: globalThis.Response, error?: ErrorHandler) {
+  constructor(response: globalThis.Response, error?: ErrorHandling) {
     this.response = response
     this.error = error
   }
@@ -96,34 +96,34 @@ export class Response {
   }
 }
 
-export class ErrorHandler {
+export class ErrorHandling {
   readonly type: string
-  private onError: OnError
+  private showError: ShowError
 
-  constructor(type: string, onError: OnError) {
+  constructor(type: string, showError: ShowError) {
     this.type = type
-    this.onError = onError
+    this.showError = showError
   }
 
   handle(): void {
     // エラーメッセージに変換
     if (this.type === "NetworkError") {
-      this.onError(`ネットワークエラーが発生しました。`)
+      this.showError(`ネットワークエラーが発生しました。`)
     } else if (this.type === "ServerError") {
-      this.onError(
+      this.showError(
         `エラーが発生しました。しばらく時間をおいてから再実行してください。`
       )
     } else {
-      this.onError(`エラーが発生しました。ページをリロードしてください。`)
+      this.showError(`エラーが発生しました。ページをリロードしてください。`)
     }
   }
 }
 
-type OnError = (message: string) => void
+export type ShowError = (message: string) => void
 
-const ErrorHandlerContext = createContext<{ onError: OnError }>({
+const ErrorHandlerContext = createContext<{ showError: ShowError }>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onError: () => {},
+  showError: () => {},
 })
 
 const ApiContext = createContext<{ api: Api }>({ api: null })
@@ -134,15 +134,15 @@ const ApiContextProvider: React.FC = ({ children }) => {
   const [open, setOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
 
-  const onError = (message: string) => {
+  const showError = (message: string) => {
     setErrorMessage(message)
     setOpen(true)
   }
 
-  const [api, setApi] = useState<Api>(() => initialize(firebase, onError))
+  const [api, setApi] = useState<Api>(() => initialize(firebase, showError))
 
   useEffect(() => {
-    setApi(() => initialize(firebase, onError))
+    setApi(() => initialize(firebase, showError))
   }, [firebase])
 
   const handleClose = (
@@ -157,7 +157,7 @@ const ApiContextProvider: React.FC = ({ children }) => {
 
   return (
     <ApiContext.Provider value={{ api }}>
-      <ErrorHandlerContext.Provider value={{ onError }}>
+      <ErrorHandlerContext.Provider value={{ showError: showError }}>
         {children}
       </ErrorHandlerContext.Provider>
       <Snackbar
@@ -176,7 +176,7 @@ const ApiContextProvider: React.FC = ({ children }) => {
   )
 }
 
-const initialize = (firebase: Firebase | null, onError: OnError): Api => {
+const initialize = (firebase: Firebase | null, showError: ShowError): Api => {
   const api = ky.create({
     prefixUrl: process.env.NEXT_PUBLIC_API_SERVER_URL,
     timeout: 10000, // ms
@@ -184,7 +184,7 @@ const initialize = (firebase: Firebase | null, onError: OnError): Api => {
       beforeRequest: [authHeaderHook(firebase)],
     },
   })
-  return new Api(api, onError)
+  return new Api(api, showError)
 }
 
 const authHeaderHook = (firebase: Firebase | null): BeforeRequestHook => {
