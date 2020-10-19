@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
 
 import firebase from "firebase/app"
 
@@ -28,6 +28,7 @@ const initialize = async () => {
     return null
   }
 
+  // Modules
   await Promise.all([import("firebase/auth"), import("firebase/analytics")])
 
   const config = JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG)
@@ -74,5 +75,15 @@ const FirebaseContextProvider: React.FC = ({ children }) => {
   )
 }
 
-export default FirebaseContext
-export { FirebaseContextProvider }
+const useFirebase = (): {
+  firebase: Firebase | null
+  getFirebase: () => Promise<Firebase | null>
+} => {
+  return useContext(FirebaseContext)
+}
+
+const useUserState = (): { user: User | null; initialized: boolean } => {
+  return useContext(FirebaseContext)
+}
+
+export { FirebaseContextProvider, useFirebase, useUserState }

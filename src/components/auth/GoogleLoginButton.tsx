@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
+import React from "react"
 
 import MuiButton from "@material-ui/core/Button"
 import clsx from "clsx"
 
-import FirebaseContext from "components/FirebaseContext"
+import { useFirebase } from "components/FirebaseContext"
 
 import styles from "./GoogleLoginButton.module.scss"
 
@@ -11,7 +11,7 @@ const GoogleLoginButton: React.FC<{
   className?: string
   label: string
 }> = ({ className, label }) => {
-  const { firebase } = useContext(FirebaseContext)
+  const { firebase } = useFirebase()
 
   const login = async () => {
     // TODO

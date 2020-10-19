@@ -1,15 +1,15 @@
 import Link from "next/link"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
-import FirebaseContext from "components/FirebaseContext"
+import { useFirebase } from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
 
 const SignupContainer: React.FC = () => {
-  const { getFirebase } = useContext(FirebaseContext)
+  const { getFirebase } = useFirebase()
 
   const [email, setEmail] = useState("")
 

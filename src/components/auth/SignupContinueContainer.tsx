@@ -1,14 +1,14 @@
 import { useRouter } from "next/router"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
-import FirebaseContext from "components/FirebaseContext"
+import { useFirebase } from "components/FirebaseContext"
 
 const SignupContinueContainer: React.FC = () => {
   const router = useRouter()
-  const { firebase, getFirebase } = useContext(FirebaseContext)
+  const { firebase, getFirebase } = useFirebase()
 
   const [storedEmail, setStoredEmail] = useState("")
   const [email, setEmail] = useState("")

@@ -6,7 +6,7 @@ import CloseIcon from "@material-ui/icons/Close"
 import { BeforeRequestHook, Options } from "ky"
 import ky from "ky-universal"
 
-import FirebaseContext, { Firebase } from "./FirebaseContext"
+import { Firebase, useFirebase } from "./FirebaseContext"
 
 type Ky = typeof ky
 
@@ -129,7 +129,7 @@ const ErrorHandlerContext = createContext<{ onError: OnError }>({
 const ApiContext = createContext<{ api: Api }>({ api: null })
 
 const ApiContextProvider: React.FC = ({ children }) => {
-  const { firebase } = useContext(FirebaseContext)
+  const { firebase } = useFirebase()
 
   const [open, setOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")

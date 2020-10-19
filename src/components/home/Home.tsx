@@ -1,12 +1,13 @@
 import Link from "next/link"
-import React, { useContext } from "react"
+import React from "react"
 
-import FirebaseContext from "components/FirebaseContext"
+import { useFirebase, useUserState } from "components/FirebaseContext"
 
 import styles from "./Home.module.scss"
 
 const Home: React.FC = () => {
-  const { getFirebase, user, initialized } = useContext(FirebaseContext)
+  const { getFirebase } = useFirebase()
+  const { user, initialized } = useUserState()
 
   const logout = async () => {
     const firebase = await getFirebase()
