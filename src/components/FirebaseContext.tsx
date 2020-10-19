@@ -2,21 +2,9 @@ import React, { createContext, useContext, useEffect, useState } from "react"
 
 import firebase from "firebase/app"
 
-type User = { id: string; name: string | null }
-
 export type Firebase = firebase.app.App
 
-const FirebaseContext = createContext<{
-  firebase: Firebase | null
-  getFirebase: () => Promise<Firebase | null>
-  user: User | null
-  initialized: boolean
-}>({
-  firebase: null,
-  getFirebase: async () => null,
-  user: null,
-  initialized: false,
-})
+export type User = { id: string; name: string | null }
 
 const initialize = async () => {
   if (typeof window === "undefined") {
@@ -41,10 +29,20 @@ const initialize = async () => {
 }
 const promise = initialize()
 
+const getFirebase = (): Promise<Firebase> => promise
+
+const FirebaseContext = createContext<Firebase | null>(null)
+
+const InitialUserState = {
+  user: null as User | null,
+  initialized: false,
+}
+
+const UserContext = createContext(InitialUserState)
+
 const FirebaseContextProvider: React.FC = ({ children }) => {
   const [firebase, setFirebase] = useState<Firebase | null>(null)
-  const [user, setUser] = useState<User | null>(null)
-  const [initialized, setInitialized] = useState(false)
+  const [userState, setUserState] = useState(InitialUserState)
 
   useEffect(() => {
     ;(async () => {
@@ -56,34 +54,31 @@ const FirebaseContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (firebase) {
       return firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          setUser({ id: user.uid, name: user.displayName })
-        } else {
-          setUser(null)
-        }
-        setInitialized(true)
+        setUserState({
+          user: user ? { id: user.uid, name: user.displayName } : null,
+          initialized: true,
+        })
       })
     }
   }, [firebase])
 
   return (
-    <FirebaseContext.Provider
-      value={{ firebase, getFirebase: () => promise, user, initialized }}
-    >
-      {children}
+    <FirebaseContext.Provider value={firebase}>
+      <UserContext.Provider value={userState}>{children}</UserContext.Provider>
     </FirebaseContext.Provider>
   )
 }
 
 const useFirebase = (): {
   firebase: Firebase | null
-  getFirebase: () => Promise<Firebase | null>
+  getFirebase: () => Promise<Firebase>
 } => {
-  return useContext(FirebaseContext)
+  const firebase = useContext(FirebaseContext)
+  return { firebase, getFirebase }
 }
 
 const useUserState = (): { user: User | null; initialized: boolean } => {
-  return useContext(FirebaseContext)
+  return useContext(UserContext)
 }
 
 export { FirebaseContextProvider, useFirebase, useUserState }

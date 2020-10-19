@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react"
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 
 import IconButton from "@material-ui/core/IconButton"
 import Snackbar from "@material-ui/core/Snackbar"
@@ -121,12 +127,10 @@ export class ErrorHandling {
 
 export type ShowError = (message: string) => void
 
-const ErrorHandlerContext = createContext<{ showError: ShowError }>({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  showError: () => {},
-})
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const ErrorHandlerContext = createContext<ShowError>(() => {})
 
-const ApiContext = createContext<{ api: Api }>({ api: null })
+const ApiContext = createContext<Api>(null)
 
 const ApiContextProvider: React.FC = ({ children }) => {
   const { firebase } = useFirebase()
@@ -134,15 +138,18 @@ const ApiContextProvider: React.FC = ({ children }) => {
   const [open, setOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
 
-  const showError = (message: string) => {
+  const showError = useCallback((message: string) => {
     setErrorMessage(message)
     setOpen(true)
-  }
+  }, [])
 
   const [api, setApi] = useState<Api>(() => initialize(firebase, showError))
 
   useEffect(() => {
-    setApi(() => initialize(firebase, showError))
+    if (firebase) {
+      setApi(() => initialize(firebase, showError))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firebase])
 
   const handleClose = (
@@ -156,8 +163,8 @@ const ApiContextProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <ApiContext.Provider value={{ api }}>
-      <ErrorHandlerContext.Provider value={{ showError: showError }}>
+    <ApiContext.Provider value={api}>
+      <ErrorHandlerContext.Provider value={showError}>
         {children}
       </ErrorHandlerContext.Provider>
       <Snackbar
@@ -214,8 +221,11 @@ const authHeaderHook = (firebase: Firebase | null): BeforeRequestHook => {
 }
 
 const useApi = (): Api => {
-  const { api } = useContext(ApiContext)
-  return api
+  return useContext(ApiContext)
 }
 
-export { ApiContextProvider, useApi, ErrorHandlerContext }
+const useShowError = (): ShowError => {
+  return useContext(ErrorHandlerContext)
+}
+
+export { ApiContextProvider, useApi, useShowError }
