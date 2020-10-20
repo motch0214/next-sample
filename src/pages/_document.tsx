@@ -52,7 +52,7 @@ export default class MyDocument extends Document {
     return {
       ...initialProps,
       // Styles fragment is rendered after the app and page rendering finish.
-      head: [sheets.getStyleElement(), ...initialProps.head],
+      head: [sheets.getStyleElement(), ...(initialProps.head ?? [])],
     }
   }
 

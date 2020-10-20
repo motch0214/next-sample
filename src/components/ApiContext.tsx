@@ -16,6 +16,10 @@ import { Firebase, useFirebase } from "./FirebaseContext"
 
 type Ky = typeof ky
 
+interface ExceptionResponse {
+  type: string
+}
+
 export class Api {
   private ky: Ky
   private showError: ShowError
@@ -51,7 +55,7 @@ export class Api {
 
   async call(
     path: string,
-    options?: Options & { method: string }
+    options: Options & { method: string }
   ): Promise<Response> {
     return await this.ky(path, {
       method: options.method,
@@ -66,7 +70,7 @@ export class Api {
 
         const handling = await error.response
           .json() // 例外の内容を取得
-          .then((body) => this.handling(body.type))
+          .then((body: ExceptionResponse) => this.handling(body.type))
           .catch(() => {
             const status = error.response.status
             if (status >= 500) {
@@ -130,7 +134,7 @@ export type ShowError = (message: string) => void
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const ErrorHandlerContext = createContext<ShowError>(() => {})
 
-const ApiContext = createContext<Api>(null)
+const ApiContext = createContext<Api | null>(null)
 
 const ApiContextProvider: React.FC = ({ children }) => {
   const { firebase } = useFirebase()
@@ -221,7 +225,7 @@ const authHeaderHook = (firebase: Firebase | null): BeforeRequestHook => {
 }
 
 const useApi = (): Api => {
-  return useContext(ApiContext)
+  return useContext(ApiContext) as Api // Api instance given to ApiContext.Provider always
 }
 
 const useShowError = (): ShowError => {

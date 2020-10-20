@@ -29,7 +29,7 @@ const initialize = async () => {
 }
 const promise = initialize()
 
-const getFirebase = (): Promise<Firebase> => promise
+const getFirebase = () => promise
 
 const FirebaseContext = createContext<Firebase | null>(null)
 
@@ -91,7 +91,10 @@ const useFirebase = (): {
   getFirebase: () => Promise<Firebase>
 } => {
   const firebase = useContext(FirebaseContext)
-  return { firebase, getFirebase }
+  return {
+    firebase,
+    getFirebase: getFirebase as () => Promise<Firebase>, // Firebase instance given in browser
+  }
 }
 
 const useUserState = (): { user: User | null; initialized: boolean } => {

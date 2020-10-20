@@ -8,6 +8,8 @@ import { useFirebase } from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
 
+export const SIGNUP_EMAIL_KEY = "emailForSignup"
+
 const SignupContainer: React.FC = () => {
   const { getFirebase } = useFirebase()
 
@@ -36,7 +38,7 @@ const SignupContainer: React.FC = () => {
           handleCodeInApp: true,
         })
         .then(() => {
-          window.localStorage.setItem("emailForSignup", email)
+          window.localStorage.setItem(SIGNUP_EMAIL_KEY, email)
           setSuccess(true)
         })
         .catch((error) => {

@@ -6,6 +6,8 @@ import TextField from "@material-ui/core/TextField"
 
 import { useFirebase } from "components/FirebaseContext"
 
+import { SIGNUP_EMAIL_KEY } from "./SignupContainer"
+
 const SignupContinueContainer: React.FC = () => {
   const router = useRouter()
   const { firebase, getFirebase } = useFirebase()
@@ -21,7 +23,7 @@ const SignupContinueContainer: React.FC = () => {
   useEffect(() => {
     if (firebase) {
       if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-        setStoredEmail(window.localStorage.getItem("emailForSignup"))
+        setStoredEmail(window.localStorage.getItem(SIGNUP_EMAIL_KEY) || "")
       } else {
         router.replace("/signup")
       }
@@ -48,10 +50,10 @@ const SignupContinueContainer: React.FC = () => {
           console.error(error)
         })
 
-      if (!response) {
+      const user = response && response.user
+      if (!user) {
         return
       }
-      const { user } = response
 
       await user
         .updatePassword(password)
