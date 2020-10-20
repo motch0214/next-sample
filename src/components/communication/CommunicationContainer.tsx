@@ -2,8 +2,9 @@ import React, { useState } from "react"
 
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
+import ky from "ky-universal"
 
-import { useApi } from "components/ApiContext"
+import { useApi, useShowError } from "components/ApiContext"
 import useQuery from "utils/useQuery"
 
 interface Article {
@@ -12,13 +13,26 @@ interface Article {
 
 const CommunicationContainer: React.FC = () => {
   const api = useApi()
+  const showError = useShowError()
 
+  const [message, setMessage] = useState("")
   const [id, setId] = useState("")
   const [display, setDisplay] = useState("")
 
   const { data: article, error } = useQuery<Article>(
     id ? `articles/${id}` : null
   )
+
+  const send = async () => {
+    await ky
+      .post("/api/messages/notice", {
+        body: new URLSearchParams({ message }),
+      })
+      .catch(() => {
+        // TODO
+        showError("失敗しました。")
+      })
+  }
 
   const call = async () => {
     setDisplay("Loading ...")
@@ -44,6 +58,21 @@ const CommunicationContainer: React.FC = () => {
   return (
     <div className="flex flex-col items-center w-full p-4">
       <h1 className="mt-4 mb-8 text-2xl font-bold">Communication</h1>
+      <TextField
+        label="Message"
+        multiline
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <Button
+        className="my-4"
+        onClick={send}
+        color="primary"
+        variant="contained"
+        disabled={!message}
+      >
+        Send
+      </Button>
       <TextField
         label="ID"
         value={id}

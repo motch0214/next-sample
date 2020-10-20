@@ -10,6 +10,8 @@ Prepare environment file `.env.local`:
 NEXT_PUBLIC_API_SERVER_URL=https://...
 
 NEXT_PUBLIC_FIREBASE_CONFIG='{ ... }'
+
+# (optional) SLACK_NOTICE_URL=https://...
 ```
 
 Then, run the development server:
