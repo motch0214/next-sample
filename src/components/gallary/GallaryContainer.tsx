@@ -1,6 +1,6 @@
 import React from "react"
 
-import Image from "components/atom/Image"
+import Image from "components/atoms/Image"
 
 const GallaryContainer: React.FC = () => {
   return (
