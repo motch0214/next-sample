@@ -28,6 +28,12 @@ const Home: React.FC = () => {
             <Link href="/gallary">
               <a className={styles.button}>Gallary</a>
             </Link>
+            <Link href={{ pathname: "/throw", query: { type: "SSR" } }}>
+              <a className={styles.button}>Throw (SSR)</a>
+            </Link>
+            <Link href={{ pathname: "/throw", query: { type: "Render" } }}>
+              <a className={styles.button}>Throw (Render)</a>
+            </Link>
             {!initialized ? null : user ? (
               <button className={styles.button} onClick={logout}>
                 Logout
