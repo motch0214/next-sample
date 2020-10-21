@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
+import { useShowError } from "components/ApiContext"
 import { useFirebase } from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
@@ -12,6 +13,7 @@ export const SIGNUP_EMAIL_KEY = "emailForSignup"
 
 const SignupContainer: React.FC = () => {
   const { getFirebase } = useFirebase()
+  const showError = useShowError()
 
   const [email, setEmail] = useState("")
 
@@ -26,25 +28,27 @@ const SignupContainer: React.FC = () => {
       const providers = await firebase.auth().fetchSignInMethodsForEmail(email)
       if (providers.length > 0) {
         // TODO
-        console.error("Email already exists.")
+        showError("Email already exists.")
         return
       }
 
-      await firebase
+      const success = await firebase
         .auth()
         .sendSignInLinkToEmail(email, {
           // TODO
           url: "http://localhost:3000/signup/continue",
           handleCodeInApp: true,
         })
-        .then(() => {
-          window.localStorage.setItem(SIGNUP_EMAIL_KEY, email)
-          setSuccess(true)
-        })
+        .then(() => true)
         .catch((error) => {
           // TODO
-          console.error(error)
+          showError(error.message)
         })
+
+      if (success) {
+        window.localStorage.setItem(SIGNUP_EMAIL_KEY, email)
+        setSuccess(true)
+      }
     } finally {
       setProcessing(false)
     }

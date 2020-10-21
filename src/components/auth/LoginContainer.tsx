@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
+import { useShowError } from "components/ApiContext"
 import { useFirebase } from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
@@ -12,6 +13,7 @@ import GoogleLoginButton from "./GoogleLoginButton"
 const LoginContainer: React.FC = () => {
   const router = useRouter()
   const { getFirebase } = useFirebase()
+  const showError = useShowError()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -31,7 +33,7 @@ const LoginContainer: React.FC = () => {
         })
         .catch((error) => {
           // TODO
-          console.error(error)
+          showError(error.message)
         })
     } finally {
       setProcessing(false)

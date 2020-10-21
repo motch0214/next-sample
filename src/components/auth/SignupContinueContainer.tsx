@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 
+import { useShowError } from "components/ApiContext"
 import { useFirebase } from "components/FirebaseContext"
 
 import { SIGNUP_EMAIL_KEY } from "./SignupContainer"
@@ -11,6 +12,7 @@ import { SIGNUP_EMAIL_KEY } from "./SignupContainer"
 const SignupContinueContainer: React.FC = () => {
   const router = useRouter()
   const { firebase, getFirebase } = useFirebase()
+  const showError = useShowError()
 
   const [storedEmail, setStoredEmail] = useState("")
   const [email, setEmail] = useState("")
@@ -34,7 +36,7 @@ const SignupContinueContainer: React.FC = () => {
   const signup = async () => {
     if (password !== confirm) {
       // TODO
-      console.error("Different password")
+      showError("Different password")
       return
     }
 
@@ -47,7 +49,7 @@ const SignupContinueContainer: React.FC = () => {
         .signInWithEmailLink(storedEmail || email, window.location.href)
         .catch((error) => {
           // TODO
-          console.error(error)
+          showError(error.message)
         })
 
       const user = response && response.user
@@ -64,7 +66,8 @@ const SignupContinueContainer: React.FC = () => {
           router.push("/")
         })
         .catch((error) => {
-          console.log(error)
+          // TODO
+          showError(error.message)
         })
     } finally {
       setProcessing(false)
