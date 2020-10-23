@@ -1,3 +1,9 @@
 **/node_modules/*
 **/out/*
 **/.next/*
+
+# next-pwa
+/public/precache.*.*.js
+/public/sw.js
+/public/workbox-*.js
+/public/worker-*.js
