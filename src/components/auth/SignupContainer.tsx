@@ -9,7 +9,7 @@ import { useFirebase } from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
 
-export const SIGNUP_EMAIL_KEY = "emailForSignup"
+export const SIGNUP_EMAIL_KEY = "SIGNUP_EMAIL_KEY"
 
 const SignupContainer: React.FC = () => {
   const { getFirebase } = useFirebase()

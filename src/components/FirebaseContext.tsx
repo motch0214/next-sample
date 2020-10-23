@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react"
 
 import firebase from "firebase/app"
 
-export type Firebase = firebase.app.App
+export type Firebase = typeof firebase
 
 export type User = { id: string; name: string | null }
 
@@ -25,7 +25,7 @@ const initialize = async () => {
   // Initialzation
   app.analytics()
 
-  return app
+  return firebase
 }
 const promise = initialize()
 
