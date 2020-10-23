@@ -34,7 +34,7 @@ const components = {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const source = readDocument("privacy.mdx")
+  const source = await readDocument("privacy.mdx")
   const mdxSource = await render(source, { components })
 
   return {
