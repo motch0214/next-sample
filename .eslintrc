@@ -26,7 +26,8 @@
           { "pattern": "next", "group": "builtin" },
           { "pattern": "next/*", "group": "builtin" },
           { "pattern": "components/**/*", "group": "internal" },
-          { "pattern": "utils/**/*", "group": "internal" }
+          { "pattern": "utils/**/*", "group": "internal" },
+          { "pattern": "images/**/*", "group": "internal", "position": "after" }
         ],
         "groups": ["builtin", "external", "internal", "parent", "sibling"],
         "pathGroupsExcludedImportTypes": ["builtin"],

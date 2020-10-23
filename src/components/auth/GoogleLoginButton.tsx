@@ -5,6 +5,8 @@ import clsx from "clsx"
 
 import { useFirebase } from "components/FirebaseContext"
 
+import GoogleSvg from "images/google.svg?sprite"
+
 import styles from "./GoogleLoginButton.module.scss"
 
 const GoogleLoginButton: React.FC<{
@@ -21,7 +23,7 @@ const GoogleLoginButton: React.FC<{
     <MuiButton
       classes={{ root: clsx(className, styles.root) }}
       variant="contained"
-      startIcon={<img src="/google.svg" height="24px" width="24px" />}
+      startIcon={<GoogleSvg className="h-font" />}
       onClick={login}
     >
       {label}

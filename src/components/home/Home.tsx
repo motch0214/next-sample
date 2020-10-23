@@ -3,6 +3,8 @@ import React from "react"
 
 import { useFirebase, useUserState } from "components/FirebaseContext"
 
+import VercelSvg from "images/vercel.svg?sprite"
+
 import styles from "./Home.module.scss"
 
 const Home: React.FC = () => {
@@ -103,8 +105,7 @@ const Home: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
-          <img className="ml-2 h-font" src="/vercel.svg" alt="Vercel Logo" />
+          Powered by <VercelSvg className="ml-2 h-font" />
         </a>
       </footer>
     </div>
