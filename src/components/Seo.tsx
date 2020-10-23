@@ -1,4 +1,3 @@
-import Head from "next/head"
 import React from "react"
 
 import { NextSeo } from "next-seo"
@@ -12,14 +11,7 @@ const Seo: React.FC<{ title?: string }> = ({ title }) => {
     title: title ? `${title} | ${site.title}` : site.title,
   }
 
-  return (
-    <>
-      <NextSeo title={meta.title} />
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-    </>
-  )
+  return <NextSeo title={meta.title} />
 }
 
 export default Seo
