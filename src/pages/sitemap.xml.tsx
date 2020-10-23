@@ -3,7 +3,7 @@ import React from "react"
 
 import { js2xml } from "xml-js"
 
-import { getAllPages } from "utils/sitemap"
+import { getAllPages } from "utils/server/sitemap"
 
 const getSitemap = async () => {
   const pages = await getAllPages()

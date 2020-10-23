@@ -8,7 +8,7 @@ import Seo from "components/Seo"
 import Image from "components/atoms/Image"
 import Document from "components/documents/Document"
 import InternalLink from "components/documents/InternalLink"
-import { readDocument } from "utils/documents"
+import { readDocument } from "utils/server/documents"
 
 const Privacy: React.FC<Infer<typeof getStaticProps>> = ({ source }) => {
   const content = hydrate(source, { components })
