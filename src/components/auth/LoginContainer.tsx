@@ -24,9 +24,10 @@ const LoginContainer: React.FC = () => {
   })
 
   const [email, setEmail] = useState("")
+  const [emailError, setEmailError] = useState("")
   const [password, setPassword] = useState("")
 
-  const [processing, setProcessing] = useState(false)
+  const [loginProcessing, setLoginProcessing] = useState(false)
 
   const loginWithGoogle = async () => {
     const firebase = await getFirebase()
@@ -34,30 +35,43 @@ const LoginContainer: React.FC = () => {
   }
 
   const login = async () => {
+    setEmailError("")
+
     const firebase = await getFirebase()
 
-    setProcessing(true)
+    setLoginProcessing(true)
     try {
-      await firebase
+      const credential = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          router.push("/")
-        })
         .catch((error) => {
-          // TODO
-          showError(error.message)
+          if (error.code === "auth/invalid-email") {
+            setEmailError("不正なメールアドレスです。")
+          } else if (
+            error.code === "auth/user-not-found" ||
+            error.code === "auth/user-disabled" ||
+            error.code === "auth/wrong-password"
+          ) {
+            showError("ログインに失敗しました。")
+          } else {
+            showError(error.message)
+          }
         })
+
+      if (credential && credential.user) {
+        router.push("/")
+      }
     } finally {
-      setProcessing(false)
+      setLoginProcessing(false)
     }
   }
 
+  const processing = loginProcessing || oauth.processing
+
   return (
     <div className="relative">
-      {processing || oauth.processing ? (
-        <LinearProgress className="absolute w-full" />
-      ) : null}
+      {processing ? <LinearProgress className="absolute w-full" /> : null}
+
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
         <div className="flex flex-col items-center justify-center w-full max-w-md p-12 bg-white rounded shadow-2xl">
           <div className="mb-8 text-2xl font-bold">Login</div>
@@ -65,7 +79,7 @@ const LoginContainer: React.FC = () => {
             className="w-full"
             label="Login with Google"
             onClick={loginWithGoogle}
-            disabled={oauth.processing}
+            disabled={processing}
           />
           <div className="my-4">or</div>
           <TextField
@@ -74,6 +88,8 @@ const LoginContainer: React.FC = () => {
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            error={!!emailError}
+            helperText={emailError}
           />
           <TextField
             className="w-full mt-2"
