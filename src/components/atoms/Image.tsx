@@ -7,6 +7,17 @@ type ResponsiveImage = {
   height: number
 }
 
+/**
+@example
+```
+<Image
+  className="w-full h-auto"
+  image={require("images/xxxx.jpg?sizes[]=600,sizes[]=1024")}
+  webp={require("images/xxxx.jpg?sizes[]=600,sizes[]=1024&format=webp")}
+  alt="Alternative"
+/>
+```
+*/
 const Image: React.FC<{
   className: string
   image: ResponsiveImage
@@ -28,4 +39,5 @@ const Image: React.FC<{
     </picture>
   )
 }
+
 export default Image
