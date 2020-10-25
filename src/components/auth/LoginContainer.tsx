@@ -1,72 +1,35 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
+import React from "react"
 
 import Button from "@material-ui/core/Button"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import TextField from "@material-ui/core/TextField"
 
-import { useShowError } from "components/ApiContext"
 import { useFirebase } from "components/FirebaseContext"
 
 import GoogleLoginButton from "./GoogleLoginButton"
+import useEmailLogin from "./useEmailLogin"
 import useOAuthLogin from "./useOAuthLogin"
 
 const LoginContainer: React.FC = () => {
   const router = useRouter()
   const { getFirebase } = useFirebase()
-  const showError = useShowError()
 
-  const oauth = useOAuthLogin({
-    onSuccess: () => {
-      router.push("/")
-    },
+  const email = useEmailLogin({
+    onSuccess: () => router.push("/"),
   })
 
-  const [email, setEmail] = useState("")
-  const [emailError, setEmailError] = useState("")
-  const [password, setPassword] = useState("")
-
-  const [loginProcessing, setLoginProcessing] = useState(false)
+  const oauth = useOAuthLogin({
+    onSuccess: () => router.push("/"),
+  })
 
   const loginWithGoogle = async () => {
     const firebase = await getFirebase()
     await oauth.login(new firebase.auth.GoogleAuthProvider())
   }
 
-  const login = async () => {
-    setEmailError("")
-
-    const firebase = await getFirebase()
-
-    setLoginProcessing(true)
-    try {
-      const credential = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .catch((error) => {
-          if (error.code === "auth/invalid-email") {
-            setEmailError("不正なメールアドレスです。")
-          } else if (
-            error.code === "auth/user-not-found" ||
-            error.code === "auth/user-disabled" ||
-            error.code === "auth/wrong-password"
-          ) {
-            showError("ログインに失敗しました。")
-          } else {
-            showError(error.message)
-          }
-        })
-
-      if (credential && credential.user) {
-        router.push("/")
-      }
-    } finally {
-      setLoginProcessing(false)
-    }
-  }
-
-  const processing = loginProcessing || oauth.processing
+  const processing = email.state.processing || oauth.processing
 
   return (
     <div className="relative">
@@ -86,24 +49,24 @@ const LoginContainer: React.FC = () => {
             className="w-full"
             type="email"
             label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={!!emailError}
-            helperText={emailError}
+            value={email.state.email}
+            onChange={(e) => email.setEmail(e.target.value)}
+            error={!!email.state.emailError}
+            helperText={email.state.emailError}
           />
           <TextField
             className="w-full mt-2"
             type="password"
             label="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={email.state.password}
+            onChange={(e) => email.setPassword(e.target.value)}
           />
           <Button
             className="w-full mt-4"
             color="primary"
             variant="contained"
-            disabled={processing || !email || !password}
-            onClick={login}
+            disabled={processing || !email.state.email || !email.state.password}
+            onClick={email.login}
           >
             Login
           </Button>
