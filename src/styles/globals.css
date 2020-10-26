@@ -16,6 +16,6 @@
 }
 
 /* Global styles */
-.MuiButton-root:focus {
+.MuiButtonBase-root:focus {
   outline: 0;
 }

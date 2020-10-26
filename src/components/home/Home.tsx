@@ -1,52 +1,15 @@
-import Link from "next/link"
 import React from "react"
-
-import { useFirebase, useUserState } from "components/FirebaseContext"
 
 import VercelSvg from "images/vercel.svg?sprite"
 
+import Header from "./Header"
 import styles from "./Home.module.scss"
 
 const Home: React.FC = () => {
-  const { getFirebase } = useFirebase()
-  const { user, initialized } = useUserState()
-
-  const logout = async () => {
-    const firebase = await getFirebase()
-    await firebase.auth().signOut()
-  }
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-2">
-      <header className="fixed top-0 w-full h-12 bg-gray-700">
-        <div className="flex items-center justify-end w-full h-full max-w-4xl px-4 mx-auto">
-          <div className="grid grid-flow-col gap-x-4">
-            <Link href="/communication">
-              <a className={styles.button}>Communication</a>
-            </Link>
-            <Link href="/privacy">
-              <a className={styles.button}>Privacy Policy</a>
-            </Link>
-            <Link href="/gallary">
-              <a className={styles.button}>Gallary</a>
-            </Link>
-            <Link href={{ pathname: "/throw", query: { type: "SSR" } }}>
-              <a className={styles.button}>Throw (SSR)</a>
-            </Link>
-            <Link href={{ pathname: "/throw", query: { type: "Render" } }}>
-              <a className={styles.button}>Throw (Render)</a>
-            </Link>
-            {!initialized ? null : user ? (
-              <button className={styles.button} onClick={logout}>
-                Logout
-              </button>
-            ) : (
-              <Link href="/login">
-                <a className={styles.button}>Login</a>
-              </Link>
-            )}
-          </div>
-        </div>
+      <header className="fixed top-0 w-full">
+        <Header />
       </header>
 
       <main className="flex flex-col items-center justify-center flex-1 py-20">

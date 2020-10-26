@@ -4,7 +4,11 @@ import firebase from "firebase/app"
 
 export type Firebase = typeof firebase
 
-export type User = { id: string; name: string | null }
+export type User = {
+  id: string
+  name: string | null
+  photoUrl: string | null
+}
 
 const initialize = async () => {
   if (typeof window === "undefined") {
@@ -55,7 +59,9 @@ const FirebaseContextProvider: React.FC = ({ children }) => {
     if (firebase) {
       return firebase.auth().onAuthStateChanged((user) => {
         setUserState({
-          user: user ? { id: user.uid, name: user.displayName } : null,
+          user: user
+            ? { id: user.uid, name: user.displayName, photoUrl: user.photoURL }
+            : null,
           initialized: true,
         })
       })

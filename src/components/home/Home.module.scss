@@ -1,11 +1,3 @@
-.button {
-  @apply text-white font-bold;
-
-  &:hover {
-    @apply text-opacity-75;
-  }
-}
-
 .card {
   @apply border-gray-300 rounded-lg p-6 m-4 text-left no-underline;
 
