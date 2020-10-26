@@ -7,6 +7,7 @@ import LinearProgress from "@material-ui/core/LinearProgress"
 import TextField from "@material-ui/core/TextField"
 
 import { useFirebase } from "components/FirebaseContext"
+import Form from "components/atoms/Form"
 
 import GoogleLoginButton from "./GoogleLoginButton"
 import useEmailLogin from "./useEmailLogin"
@@ -45,31 +46,34 @@ const LoginContainer: React.FC = () => {
             disabled={processing}
           />
           <div className="my-4">or</div>
-          <TextField
-            className="w-full"
-            type="email"
-            label="Email"
-            value={email.state.email}
-            onChange={(e) => email.setEmail(e.target.value)}
-            error={!!email.state.emailError}
-            helperText={email.state.emailError}
-          />
-          <TextField
-            className="w-full mt-2"
-            type="password"
-            label="Password"
-            value={email.state.password}
-            onChange={(e) => email.setPassword(e.target.value)}
-          />
-          <Button
-            className="w-full mt-4"
-            color="primary"
-            variant="contained"
-            disabled={processing || !email.state.email || !email.state.password}
-            onClick={email.login}
-          >
-            Login
-          </Button>
+          <Form className="w-full" onSubmit={email.login}>
+            <TextField
+              className="w-full"
+              label="Email"
+              value={email.state.email}
+              onChange={(e) => email.setEmail(e.target.value)}
+              error={!!email.state.emailError}
+              helperText={email.state.emailError}
+            />
+            <TextField
+              className="w-full mt-2"
+              type="password"
+              label="Password"
+              value={email.state.password}
+              onChange={(e) => email.setPassword(e.target.value)}
+            />
+            <Button
+              className="w-full mt-4"
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={
+                processing || !email.state.email || !email.state.password
+              }
+            >
+              Login
+            </Button>
+          </Form>
 
           <div className="flex flex-col items-center w-full pt-4 mt-10 border-t border-gray-300">
             <a className="outline-none text-primary hover:text-opacity-75 focus:underline">

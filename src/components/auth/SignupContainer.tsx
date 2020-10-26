@@ -7,6 +7,7 @@ import LinearProgress from "@material-ui/core/LinearProgress"
 import TextField from "@material-ui/core/TextField"
 
 import { useFirebase } from "components/FirebaseContext"
+import Form from "components/atoms/Form"
 import { validateEmail } from "utils/validations"
 
 import GoogleLoginButton from "./GoogleLoginButton"
@@ -52,24 +53,26 @@ const SignupContainer: React.FC = () => {
                 disabled={processing}
               />
               <div className="my-4">or</div>
-              <TextField
-                className="w-full"
-                type="email"
-                label="Email"
-                value={email.state.email}
-                onChange={(e) => email.setEmail(e.target.value)}
-                error={!!email.state.emailError}
-                helperText={email.state.emailError}
-              />
-              <Button
-                className="w-full mt-4"
-                color="primary"
-                variant="contained"
-                disabled={processing || !validateEmail(email.state.email)}
-                onClick={email.signup}
-              >
-                Continue
-              </Button>
+              <Form className="w-full" onSubmit={email.signup}>
+                <TextField
+                  className="w-full"
+                  type="email"
+                  label="Email"
+                  value={email.state.email}
+                  onChange={(e) => email.setEmail(e.target.value)}
+                  error={!!email.state.emailError}
+                  helperText={email.state.emailError}
+                />
+                <Button
+                  className="w-full mt-4"
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  disabled={processing || !validateEmail(email.state.email)}
+                >
+                  Continue
+                </Button>
+              </Form>
 
               <div className="flex flex-col items-center w-full pt-4 mt-10 border-t border-gray-300">
                 <Link href="/login">
