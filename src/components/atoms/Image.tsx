@@ -7,6 +7,8 @@ type ResponsiveImage = {
   height: number
 }
 
+type NextImageProps = Parameters<typeof NextImage>[0]
+
 /**
 @example
 ```
@@ -16,16 +18,15 @@ type ResponsiveImage = {
 />
 ```
 */
-const Image: React.FC<{
-  image: ResponsiveImage
-  alt: string
-}> = ({ image, alt }) => {
+const Image: React.FC<
+  { image: ResponsiveImage } & Omit<NextImageProps, "src">
+> = ({ image, width, height, ...props }) => {
   return (
     <NextImage
       src={image.src}
-      width={image.width}
-      height={image.height}
-      alt={alt}
+      width={width && height ? width : image.width}
+      height={width && height ? height : image.height}
+      {...props}
     />
   )
 }
