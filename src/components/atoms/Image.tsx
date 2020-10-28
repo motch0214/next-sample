@@ -1,8 +1,8 @@
+import NextImage from "next/image"
 import React from "react"
 
 type ResponsiveImage = {
   src: string
-  srcSet: string
   width: number
   height: number
 }
@@ -11,32 +11,22 @@ type ResponsiveImage = {
 @example
 ```
 <Image
-  className="w-full h-auto"
-  image={require("images/xxxx.jpg?sizes[]=600,sizes[]=1024")}
-  webp={require("images/xxxx.jpg?sizes[]=600,sizes[]=1024&format=webp")}
+  image={require("images/xxxx.jpg?resize")}
   alt="Alternative"
 />
 ```
 */
 const Image: React.FC<{
-  className: string
   image: ResponsiveImage
-  webp?: ResponsiveImage
   alt: string
-}> = ({ className, image, webp, alt }) => {
+}> = ({ image, alt }) => {
   return (
-    <picture>
-      {webp ? <source srcSet={webp.srcSet} type="image/webp" /> : null}
-      <source srcSet={image.srcSet} />
-      <img
-        className={className}
-        src={image.src}
-        width={image.width}
-        height={image.height}
-        loading="lazy"
-        alt={alt}
-      />
-    </picture>
+    <NextImage
+      src={image.src}
+      width={image.width}
+      height={image.height}
+      alt={alt}
+    />
   )
 }
 

@@ -24,12 +24,7 @@ const Privacy: React.FC<Infer<typeof getStaticProps>> = ({ source }) => {
 const components = {
   Link: InternalLink,
   MadotsukiImage: () => (
-    <Image
-      className="w-full h-auto"
-      image={require("images/027.jpg?sizes[]=600,sizes[]=1024")}
-      webp={require("images/027.jpg?sizes[]=600,sizes[]=1024&format=webp")}
-      alt="MADOTSUKI"
-    />
+    <Image image={require("images/027.jpg?resize")} alt="MADOTSUKI" />
   ),
 }
 
