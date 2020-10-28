@@ -5,6 +5,7 @@
     "eslint:recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@next/next/recommended",
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:tailwind/recommended",
