@@ -9,6 +9,7 @@ import React, {
 import IconButton from "@material-ui/core/IconButton"
 import Snackbar from "@material-ui/core/Snackbar"
 import CloseIcon from "@material-ui/icons/Close"
+import dayjs from "dayjs"
 import { BeforeRequestHook, Options } from "ky"
 import ky from "ky-universal"
 
@@ -206,12 +207,10 @@ const authHeaderHook = (firebase: Firebase | null): BeforeRequestHook => {
         const result = await user.getIdTokenResult()
         request.headers.set("Authorization", `Bearer ${result.token}`)
         ;(async () => {
-          // moment 重いので。
-          const moment = (await import("moment")).default
-
-          const aliveSeconds = moment
-            .duration(moment().diff(moment(result.issuedAtTime)))
-            .asSeconds()
+          const aliveSeconds = dayjs().diff(
+            dayjs(result.issuedAtTime),
+            "second"
+          )
 
           // Refresh in 30s
           if (aliveSeconds > 30) {
