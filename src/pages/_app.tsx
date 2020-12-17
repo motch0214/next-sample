@@ -5,6 +5,7 @@ import { ThemeProvider, StylesProvider } from "@material-ui/core/styles"
 
 import { ApiContextProvider } from "components/ApiContext"
 import { FirebaseContextProvider } from "components/FirebaseContext"
+import { UserContextProvider } from "components/auth/useUserState"
 
 import theme from "../styles/theme"
 
@@ -15,9 +16,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <FirebaseContextProvider>
-          <ApiContextProvider>
-            <Component {...pageProps} />
-          </ApiContextProvider>
+          <UserContextProvider>
+            <ApiContextProvider>
+              <Component {...pageProps} />
+            </ApiContextProvider>
+          </UserContextProvider>
         </FirebaseContextProvider>
       </ThemeProvider>
     </StylesProvider>

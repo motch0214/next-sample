@@ -4,12 +4,6 @@ import firebase from "firebase/app"
 
 export type Firebase = typeof firebase
 
-export type User = {
-  id: string
-  name: string | null
-  photoUrl: string | null
-}
-
 const initialize = async () => {
   if (typeof window === "undefined") {
     return null
@@ -33,20 +27,12 @@ const initialize = async () => {
 }
 const promise = initialize()
 
-const getFirebase = () => promise
+export const getFirebase = (): Promise<Firebase | null> => promise
 
 const FirebaseContext = createContext<Firebase | null>(null)
 
-const InitialUserState = {
-  user: null as User | null,
-  initialized: false,
-}
-
-const UserContext = createContext(InitialUserState)
-
-const FirebaseContextProvider: React.FC = ({ children }) => {
+export const FirebaseContextProvider: React.FC = ({ children }) => {
   const [firebase, setFirebase] = useState<Firebase | null>(null)
-  const [userState, setUserState] = useState(InitialUserState)
 
   useEffect(() => {
     ;(async () => {
@@ -55,22 +41,9 @@ const FirebaseContextProvider: React.FC = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (firebase) {
-      return firebase.auth().onAuthStateChanged((user) => {
-        setUserState({
-          user: user
-            ? { id: user.uid, name: user.displayName, photoUrl: user.photoURL }
-            : null,
-          initialized: true,
-        })
-      })
-    }
-  }, [firebase])
-
   return (
     <FirebaseContext.Provider value={firebase}>
-      <UserContext.Provider value={userState}>{children}</UserContext.Provider>
+      {children}
     </FirebaseContext.Provider>
   )
 }
@@ -92,19 +65,13 @@ const callback = async () => {
 }
 ```
 */
-const useFirebase = (): {
+export const useFirebase = (): {
   firebase: Firebase | null
   getFirebase: () => Promise<Firebase>
 } => {
   const firebase = useContext(FirebaseContext)
   return {
     firebase,
-    getFirebase: getFirebase as () => Promise<Firebase>, // Firebase instance given in browser
+    getFirebase: getFirebase as () => Promise<Firebase>, // Firebase instance given only in browser
   }
 }
-
-const useUserState = (): { user: User | null; initialized: boolean } => {
-  return useContext(UserContext)
-}
-
-export { FirebaseContextProvider, useFirebase, useUserState }

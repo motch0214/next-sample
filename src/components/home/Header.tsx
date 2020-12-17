@@ -14,7 +14,8 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile"
 import NetworkWifiIcon from "@material-ui/icons/NetworkWifi"
 import PersonIcon from "@material-ui/icons/Person"
 
-import { useFirebase, useUserState } from "components/FirebaseContext"
+import { useFirebase } from "components/FirebaseContext"
+import useUserState from "components/auth/useUserState"
 
 import styles from "./Header.module.scss"
 
