@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import { useShowError } from "components/ApiContext"
 import { useFirebase } from "components/FirebaseContext"
+import useShowError from "components/atoms/useShowError"
 
 export const SIGNUP_EMAIL_KEY = "SIGNUP_EMAIL_KEY"
 

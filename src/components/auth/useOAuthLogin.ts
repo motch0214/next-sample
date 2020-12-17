@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react"
 
 import type firebase from "firebase"
 
-import { useShowError } from "components/ApiContext"
 import { useFirebase } from "components/FirebaseContext"
+import useShowError from "components/atoms/useShowError"
 
 const LOGIN_REDIRECT_KEY = "LOGIN_REDIRECT_KEY"
 
