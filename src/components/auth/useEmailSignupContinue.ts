@@ -60,6 +60,7 @@ const useEmailSignupContinue = ({
         .auth()
         .signInWithEmailLink(storedEmail || email, window.location.href)
         .catch((error) => {
+          console.error(error)
           if (
             error.code === "auth/expired-action-code" ||
             error.code === "auth/invalid-action-code"
@@ -87,7 +88,7 @@ const useEmailSignupContinue = ({
           onSuccess()
         })
         .catch((error) => {
-          // TODO
+          console.error(error)
           showError(error.message)
         })
     } finally {

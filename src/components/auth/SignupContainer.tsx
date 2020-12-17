@@ -5,8 +5,8 @@ import React, { useState } from "react"
 import Button from "@material-ui/core/Button"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import TextField from "@material-ui/core/TextField"
+import firebase from "firebase/app"
 
-import { useFirebase } from "components/FirebaseContext"
 import Form from "components/atoms/Form"
 import { validateEmail } from "utils/validations"
 
@@ -16,7 +16,6 @@ import useOAuthLogin from "./useOAuthLogin"
 
 const SignupContainer: React.FC = () => {
   const router = useRouter()
-  const { getFirebase } = useFirebase()
 
   const [success, setSuccess] = useState(false)
 
@@ -27,11 +26,6 @@ const SignupContainer: React.FC = () => {
   const oauth = useOAuthLogin({
     onSuccess: () => router.push("/"),
   })
-
-  const loginWithGoogle = async () => {
-    const firebase = await getFirebase()
-    await oauth.login(new firebase.auth.GoogleAuthProvider())
-  }
 
   const processing = email.state.processing || oauth.processing
 
@@ -49,7 +43,9 @@ const SignupContainer: React.FC = () => {
               <GoogleLoginButton
                 className="w-full"
                 label="Signup with Google"
-                onClick={loginWithGoogle}
+                onClick={() =>
+                  oauth.login(new firebase.auth.GoogleAuthProvider())
+                }
                 disabled={processing}
               />
               <div className="my-4">or</div>

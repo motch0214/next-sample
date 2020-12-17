@@ -29,6 +29,7 @@ const useEmailLogin = ({ onSuccess }: { onSuccess: () => void }) => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .catch((error) => {
+          console.error(error)
           if (error.code === "auth/invalid-email") {
             setEmailError("不正なメールアドレスです。")
           } else if (

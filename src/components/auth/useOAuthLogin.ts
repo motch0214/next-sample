@@ -10,7 +10,7 @@ const LOGIN_REDIRECT_KEY = "LOGIN_REDIRECT_KEY"
 const useOAuthLogin = ({
   onSuccess,
 }: {
-  onSuccess: () => void
+  onSuccess: (isNewUser: boolean) => void
 }): {
   login: (provider: firebase.auth.AuthProvider) => Promise<void>
   processing: boolean
@@ -51,12 +51,8 @@ const useOAuthLogin = ({
             return
           }
 
-          if (result?.additionalUserInfo?.isNewUser) {
-            // Handle as signup
-          }
-
           if (result.user) {
-            onSuccess()
+            onSuccess(result.additionalUserInfo?.isNewUser ?? false)
           } else {
             setProcessing(false)
           }

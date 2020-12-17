@@ -36,7 +36,7 @@ const useEmailSignup = ({ onSuccess }: { onSuccess: () => void }) => {
         })
         .then(() => true)
         .catch((error) => {
-          // TODO
+          console.error(error)
           showError(error.message)
         })
 
