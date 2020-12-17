@@ -5,8 +5,6 @@ import clsx from "clsx"
 
 import GoogleSvg from "images/google.svg?sprite"
 
-import styles from "./GoogleLoginButton.module.scss"
-
 const GoogleLoginButton: React.FC<
   {
     className?: string
@@ -15,7 +13,7 @@ const GoogleLoginButton: React.FC<
 > = ({ className, label, ...props }) => {
   return (
     <Button
-      className={clsx(className, styles.root)}
+      className={clsx(className, "bg-white hover:bg-gray-100")}
       variant="contained"
       startIcon={<GoogleSvg className="h-font" />}
       {...props}

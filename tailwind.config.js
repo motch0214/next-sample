@@ -1,16 +1,11 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
   purge: [
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/pages/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: false,
   theme: {
-    extend: {
-      colors: require("./src/styles/colors"),
-    },
+    colors: require("./src/styles/colors"),
   },
   variants: {},
   plugins: [],

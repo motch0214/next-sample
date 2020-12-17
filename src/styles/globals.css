@@ -1,21 +1,19 @@
 @tailwind base;
-
-/* Custom base styles */
-
 @tailwind components;
-
-/* Custom component styles */
-
 @tailwind utilities;
 
-/* Custom utilities */
 @layer utilities {
-  .h-font {
-    height: 1em;
+  @variants responsive {
+    .h-font {
+      height: 1em;
+    }
   }
 }
 
-/* Global styles */
+body {
+  @apply bg-background-color;
+}
+
 .MuiButtonBase-root:focus {
   outline: 0;
 }
